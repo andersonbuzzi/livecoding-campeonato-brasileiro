@@ -4,6 +4,7 @@ import br.com.buzzi.campeonatobrasileiro.dto.NovoTimeDTO;
 import br.com.buzzi.campeonatobrasileiro.dto.TimeDTO;
 import br.com.buzzi.campeonatobrasileiro.entity.Time;
 import br.com.buzzi.campeonatobrasileiro.repository.TimeRepository;
+import com.sun.org.apache.xpath.internal.operations.Bool;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -29,9 +30,29 @@ public class TimeService {
         return timeDTO;
     }
 
-    public TimeDTO adicionarTime(NovoTimeDTO novoTimeDTO) {
+    public TimeDTO adicionarTime(NovoTimeDTO novoTimeDTO) throws Exception {
+        if (timeJaExiste(novoTimeDTO.getNome(), 0)) {
+            throw new Exception(String.format("Time %s já existe.", novoTimeDTO.getNome()));
+        }
         Time time = dtoToEntity(novoTimeDTO);
         return entityToDto(timeRepository.save(time));
+    }
+
+    public TimeDTO atualizarTime(Integer id, NovoTimeDTO novoTimeDTO) throws Exception {
+        if (timeJaExiste(novoTimeDTO.getNome(), id)) {
+            throw new Exception(String.format("Time %s já existe.", novoTimeDTO.getNome()));
+        }
+        final Optional<Time> optionalTime = timeRepository.findById(id);
+        if (optionalTime.isPresent()) {
+            final Time time = optionalTime.get();
+            return entityToDto(timeRepository.save(dtoToEntity(novoTimeDTO, time)));
+        } else {
+            throw new Exception(String.format("Time com id %d inexistente", id));
+        }
+    }
+
+    private Boolean timeJaExiste(String nome, Integer id) {
+        return timeRepository.findByNomeIgnoreCaseAndAndIdNot(nome, id).size() > 0;
     }
 
     private Time dtoToEntity(NovoTimeDTO novoTimeDTO) {
@@ -46,11 +67,20 @@ public class TimeService {
         return time;
     }
 
-    public TimeDTO atualizarTime(Integer id, NovoTimeDTO novoTimeDTO) throws Exception {
+    public TimeDTO obterTime(Integer id) throws Exception {
         final Optional<Time> optionalTime = timeRepository.findById(id);
         if (optionalTime.isPresent()) {
-            final Time time = optionalTime.get();
-            return entityToDto(timeRepository.save(dtoToEntity(novoTimeDTO, time)));
+            final Time entity = optionalTime.get();
+            return entityToDto(entity);
+        } else {
+            throw new Exception(String.format("Time com id %d inexistente", id));
+        }
+    }
+
+    public void deletarTime(Integer id) throws Exception {
+        final Optional<Time> optionalTime = timeRepository.findById(id);
+        if (optionalTime.isPresent()) {
+            timeRepository.delete(optionalTime.get());
         } else {
             throw new Exception(String.format("Time com id %d inexistente", id));
         }

@@ -21,13 +21,15 @@ public class Jogo {
     private LocalDateTime data;
     private Integer golsTime1;
     private Integer golsTime2;
+    private Integer publicoPagante;
+    private Boolean encerrado;
 
     @ManyToOne
     @JoinColumn(name="time1", insertable = false, updatable = false)
     private Time time1;
 
     @ManyToOne
-    @JoinColumn(name="time1", insertable = false, updatable = false)
+    @JoinColumn(name="time2", insertable = false, updatable = false)
     private Time time2;
 
 
