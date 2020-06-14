@@ -2,7 +2,6 @@ package br.com.buzzi.campeonatobrasileiro.entity;
 
 import lombok.Data;
 
-import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -23,6 +22,7 @@ public class Jogo {
     private Integer golsTime2;
     private Integer publicoPagante;
     private Boolean encerrado;
+    private Integer rodada;
 
     @ManyToOne
     @JoinColumn(name="time1", insertable = false, updatable = false)

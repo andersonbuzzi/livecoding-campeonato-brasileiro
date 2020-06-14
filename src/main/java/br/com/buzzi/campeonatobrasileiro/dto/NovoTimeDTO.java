@@ -1,7 +1,6 @@
 package br.com.buzzi.campeonatobrasileiro.dto;
 
 import lombok.Data;
-import org.springframework.beans.factory.annotation.Required;
 
 import javax.validation.constraints.NotEmpty;
 

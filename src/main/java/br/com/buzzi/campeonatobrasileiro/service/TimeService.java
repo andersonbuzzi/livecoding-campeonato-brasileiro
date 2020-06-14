@@ -4,7 +4,6 @@ import br.com.buzzi.campeonatobrasileiro.dto.NovoTimeDTO;
 import br.com.buzzi.campeonatobrasileiro.dto.TimeDTO;
 import br.com.buzzi.campeonatobrasileiro.entity.Time;
 import br.com.buzzi.campeonatobrasileiro.repository.TimeRepository;
-import com.sun.org.apache.xpath.internal.operations.Bool;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
