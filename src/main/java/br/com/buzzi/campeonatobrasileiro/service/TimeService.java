@@ -18,7 +18,11 @@ public class TimeService {
     private TimeRepository timeRepository;
 
     public List<TimeDTO> getTimes() {
-        return timeRepository.findAll().stream().map(entity -> entityToDto(entity)).collect(Collectors.toList());
+        return findAll().stream().map(entity -> entityToDto(entity)).collect(Collectors.toList());
+    }
+
+    public List<Time> findAll() {
+        return timeRepository.findAll();
     }
 
     private TimeDTO entityToDto(Time entity) {
