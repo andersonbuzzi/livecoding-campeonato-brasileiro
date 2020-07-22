@@ -25,7 +25,7 @@ public class TimeService {
         return timeRepository.findAll();
     }
 
-    private TimeDTO entityToDto(Time entity) {
+    public TimeDTO entityToDto(Time entity) {
         TimeDTO timeDTO = new TimeDTO();
         timeDTO.setId(entity.getId());
         timeDTO.setNome(entity.getNome());
@@ -58,7 +58,7 @@ public class TimeService {
         return timeRepository.findByNomeIgnoreCaseAndAndIdNot(nome, id).size() > 0;
     }
 
-    private Time dtoToEntity(NovoTimeDTO novoTimeDTO) {
+    public Time dtoToEntity(NovoTimeDTO novoTimeDTO) {
         Time time = new Time();
         return dtoToEntity(novoTimeDTO, time);
     }
